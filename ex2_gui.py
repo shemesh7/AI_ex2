@@ -1,6 +1,6 @@
 import pygame
 import ext_elev
-import ex2_random as student   # swap to "import ex2 as student" to drive with your controller
+import ex2 as student   # swap to "import ex2 as student" to drive with your controller
 from enum import Enum
 
 
