@@ -1,6 +1,6 @@
 import pygame
 import ext_elev
-import ex2 as student   # swap to "import ex2 as student" to drive with your controller
+import ex2_331050591 as student   # swap to "import ex2 as student" to drive with your controller
 from enum import Enum
 
 
@@ -8,24 +8,23 @@ from enum import Enum
 # Problem                                                          #
 # ---------------------------------------------------------------- #
 problem = {
-    "height": 6,
+    "height": 2,
     "Elevators": {
-        0: (0, (0, 1, 2, 3), 8),
-        1: (4, (2, 4, 5, 6), 10),
+        0: (0, (0, 1, 2), 6),
     },
     "Persons": {
-        10: (0, 3, 3),
-        11: (2, 4, 6),
-        12: (4, 5, 0),
+        10: (0, 3, 1),   # cheap & lucrative (goal=floor 1)
+        11: (0, 3, 2),   # farther, low reward (goal=floor 2)
+        12: (2, 3, 0),   # opposite corner, low reward (goal=floor 0)
     },
-    "elevator_chosen_action_prob": {0: 0.8, 1: 0.7},
-    "person_chosen_action_prob":   {10: 0.9, 11: 0.6, 12: 0.85},
+    "elevator_chosen_action_prob": {0: 0.95},
+    "person_chosen_action_prob":   {10: 0.95, 11: 0.95, 12: 0.95},
     "persons_reward": {
-        10: [2, 3, 6, 10],
-        11: [1, 5, 6, 10],
-        12: [3, 4, 8, 12],
+        10: [50, 50],
+        11: [1],
+        12: [1],
     },
-    "goal_reward": 30,
+    "goal_reward": 5,
     "seed": 0,
     "horizon": 40,
 }
