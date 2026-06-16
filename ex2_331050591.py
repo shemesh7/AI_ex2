@@ -336,16 +336,17 @@ class Controller:
             for i, pa in enumerate(relay_persons)
             for pb in relay_persons[i+1:]
         ) if len(relay_persons) >= 2 else True
-        if any_relay and n_t >= 4 and all_batchable:
-            self._max_depth = 3   # all pairs can batch: depth 4 misleads coordination
+        if n_t >= 5 and any_relay and len(self._plan_eids) >= 3:
+            self._max_depth = 3   # 3-elevator relay + many persons: routing ambiguity
         elif n_t >= 4:
-            self._max_depth = 4   # direct delivery or forced-sequential relay: depth 4 helps
+            self._max_depth = 6   # iterative deepening caps at time budget anyway
         else:
             self._max_depth = 8
         # A* planner: engage for 2-elevator relay problems.
         # Disable only when persons can't batch AND a broken elevator forces sequential
         # solo trips (m5_hard): expectimax's adaptive lookahead handles that better.
-        # 3-elevator problems (m3) are excluded via len(plan_eids) <= 2.
+        # 3-elevator problems (m3) stay with expectimax: A* hits 60K expansion limit
+        # every step (state space too large), wasting time.
         any_broken = any(self.pe[e] < 0.5 for e in self.elev_ids)
         self._use_astar = (
             self.allpersons_flag and len(self.target) >= 4
