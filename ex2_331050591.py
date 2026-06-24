@@ -336,10 +336,10 @@ class Controller:
             for i, pa in enumerate(relay_persons)
             for pb in relay_persons[i+1:]
         ) if len(relay_persons) >= 2 else True
-        if n_t >= 5 and any_relay and len(self._plan_eids) >= 3:
-            self._max_depth = 3   # 3-elevator relay + many persons: routing ambiguity
+        if n_t >= 5 and any_relay:
+            self._max_depth = 3   # many persons + relay: routing ambiguity makes depth 4 misleading
         elif n_t >= 4:
-            self._max_depth = 6   # iterative deepening caps at time budget anyway
+            self._max_depth = 4
         else:
             self._max_depth = 8
         # A* planner: engage for 2-elevator relay problems.
